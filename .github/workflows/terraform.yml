@@ -13,6 +13,10 @@ jobs:
     name: "Terraform Pipeline"
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Infrastructure/terraform
+
     permissions:
       contents: read
       pull-requests: write
@@ -33,25 +37,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      # 1. Formatting Check
       - name: Terraform Format Check
-        id: fmt
         run: terraform fmt -check
 
-      # 2. Validation
-      - name: Terraform Init & Validate
-        id: validate
-        run: |
-          terraform init
-          terraform validate -no-color
+      - name: Terraform Init
+        run: terraform init
 
-      # 3. Execution Plan
+      - name: Terraform Validate
+        run: terraform validate -no-color
+
       - name: Terraform Plan
-        id: plan
         run: terraform plan -no-color
-        continue-on-error: true
 
-      # 4. Terraform Apply (Main Branch Only)
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
