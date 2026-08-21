@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -22,6 +24,14 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+
+    env:
+      AWS_REGION: us-east-1
+      TF_VAR_database_password: ${{ secrets.TF_VAR_DATABASE_PASSWORD }}
+      TF_VAR_database_name: "supportdeskdb"
+      TF_VAR_database_username: "adminuser"
+      TF_VAR_ami_id: "ami-02b64aa047cb5edf5"
+      TF_VAR_key_pair_name: "supportdesk-key"
 
     steps:
       - name: Checkout Code
@@ -52,24 +62,8 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Plan
-        timeout-minutes: 10
-        env:
-          AWS_REGION: us-east-1
-          TF_VAR_database_password: ${{ secrets.TF_VAR_database_password }}
-          TF_VAR_database_name: "supportdeskdb"
-          TF_VAR_database_username: "adminuser"
-          TF_VAR_ami_id: "ami-0e86e20dae9224db8" # Replace with your real us-east-1 AMI ID
-          TF_VAR_key_pair_name: "supportdesk-key" # Replace with your real us-east-1 Key Pair name
         run: terraform plan -input=false -no-color -out=tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        timeout-minutes: 15
-        env:
-          AWS_REGION: us-east-1
-          TF_VAR_database_password: ${{ secrets.TF_VAR_database_password }}
-          TF_VAR_database_name: "supportdeskdb"
-          TF_VAR_database_username: "adminuser"
-          TF_VAR_ami_id: "ami-02b64aa047cb5edf5" # Replace with your real us-east-1 AMI ID
-          TF_VAR_key_pair_name: "supportdesk-key" # Replace with your real us-east-1 Key Pair name
         run: terraform apply -input=false -auto-approve tfplan
