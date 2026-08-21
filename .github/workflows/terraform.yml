@@ -7,11 +7,13 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   terraform:
     name: "Terraform Pipeline"
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     defaults:
       run:
@@ -37,6 +39,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
       - name: Terraform Format Check
         run: terraform fmt -check
 
@@ -47,8 +52,8 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Plan
-        run: terraform plan -no-color -input=false -lock-timeout=5m -out=tfplan
+        run: terraform plan -input=false -no-color -out=tfplan
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -input=false -lock-timeout=5m tfplan
+        run: terraform apply -input=false -auto-approve tfplan
