@@ -34,6 +34,7 @@ resource "aws_lb_target_group" "app_tg" {
     unhealthy_threshold = 3
     timeout             = 5
     interval            = 15
+    matcher             = "200"
   }
 
   tags = {
@@ -66,6 +67,11 @@ resource "aws_launch_template" "app_lt" {
   image_id      = var.ami_id
   instance_type = "t2.micro"
   key_name      = var.key_pair_name
+
+  # ATTACH IAM INSTANCE PROFILE HERE
+  iam_instance_profile {
+    name = var.instance_profile_name
+  }
 
   network_interfaces {
     associate_public_ip_address = false

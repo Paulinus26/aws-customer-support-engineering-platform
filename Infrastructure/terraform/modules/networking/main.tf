@@ -94,6 +94,29 @@ resource "aws_internet_gateway" "igw" {
 }
 
 ########################################
+# Elastic IP & NAT Gateway
+########################################
+resource "aws_eip" "nat_eip" {
+  domain     = "vpc"
+  depends_on = [aws_internet_gateway.igw]
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-nat-eip"
+  }
+}
+
+resource "aws_nat_gateway" "nat_gw" {
+  allocation_id = aws_eip.nat_eip.id
+  subnet_id     = aws_subnet.public_a.id
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-nat-gw"
+  }
+
+  depends_on = [aws_internet_gateway.igw]
+}
+
+########################################
 # Public Route Table
 ########################################
 resource "aws_route_table" "public_rt" {
@@ -123,10 +146,15 @@ resource "aws_route_table_association" "public_b_assoc" {
 }
 
 ########################################
-# Private Route Tables (no NAT yet)
+# Private Application Route Tables (with NAT Gateway)
 ########################################
 resource "aws_route_table" "private_app_rt_a" {
   vpc_id = aws_vpc.supportdesk_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
 
   tags = {
     Name = "${var.project_name}-${var.environment}-private-app-rt-a"
@@ -135,6 +163,11 @@ resource "aws_route_table" "private_app_rt_a" {
 
 resource "aws_route_table" "private_app_rt_b" {
   vpc_id = aws_vpc.supportdesk_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
 
   tags = {
     Name = "${var.project_name}-${var.environment}-private-app-rt-b"
@@ -151,11 +184,14 @@ resource "aws_route_table_association" "private_app_b_assoc" {
   route_table_id = aws_route_table.private_app_rt_b.id
 }
 
+########################################
+# Private Database Route Tables
+########################################
 resource "aws_route_table" "private_db_rt_a" {
   vpc_id = aws_vpc.supportdesk_vpc.id
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-private-db-rt-a"
+    Name = "${var.project_name}-${var.environment}-private-db-a-rt"
   }
 }
 
@@ -163,7 +199,7 @@ resource "aws_route_table" "private_db_rt_b" {
   vpc_id = aws_vpc.supportdesk_vpc.id
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-private-db-rt-b"
+    Name = "${var.project_name}-${var.environment}-private-db-b-rt"
   }
 }
 

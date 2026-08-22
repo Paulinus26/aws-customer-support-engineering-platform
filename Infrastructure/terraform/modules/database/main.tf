@@ -40,3 +40,51 @@ resource "aws_db_instance" "postgres_db" {
     Environment = var.environment
   }
 }
+
+########################################
+# SSM Parameters for Application Access
+########################################
+
+resource "aws_ssm_parameter" "db_endpoint" {
+  name  = "/${var.project_name}/${var.environment}/DB_HOST"
+  type  = "String"
+  value = aws_db_instance.postgres_db.address
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "db_name" {
+  name  = "/${var.project_name}/${var.environment}/DB_NAME"
+  type  = "String"
+  value = var.database_name
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "db_user" {
+  name  = "/${var.project_name}/${var.environment}/DB_USER"
+  type  = "String"
+  value = var.database_username
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
+resource "aws_ssm_parameter" "db_password" {
+  name  = "/${var.project_name}/${var.environment}/DB_PASSWORD"
+  type  = "SecureString"
+  value = var.database_password
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}

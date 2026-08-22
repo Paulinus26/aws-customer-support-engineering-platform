@@ -24,5 +24,10 @@ output "private_database_subnet_ids" {
 
 output "application_url" {
   description = "Application Load Balancer DNS Name"
+  value       = "http://${module.compute.alb_dns_name}"
+}
+
+output "alb_dns_name" {
+  description = "Raw ALB DNS Name"
   value       = module.compute.alb_dns_name
 }
