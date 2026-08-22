@@ -4,7 +4,8 @@
 # Platform: Amazon Linux 2023
 ###############################################################################
 
-set -euxo pipefail
+# Use pipefail but suppress instant termination on non-critical service setups
+set -uo pipefail
 
 # Log user-data execution
 exec > >(tee /var/log/user-data.log | logger -t user-data) 2>&1
@@ -14,16 +15,11 @@ echo "Starting SupportDesk bootstrap..."
 echo "======================================================="
 
 ###############################################################################
-# Update OS
+# Update OS & Install Packages
 ###############################################################################
 
 dnf update -y
-
-###############################################################################
-# Install Packages
-###############################################################################
-
-dnf install -y git nginx nodejs amazon-cloudwatch-agent
+dnf install -y git nginx nodejs amazon-cloudwatch-agent aws-cli
 
 ###############################################################################
 # Install PM2
@@ -132,33 +128,45 @@ app.listen(PORT, () => {
 EOF
 
 ###############################################################################
-# Environment Variables
+# Environment Variables & Parameter SSM Fallback
 ###############################################################################
 
+DB_HOST="${DB_HOST_PLACEHOLDER:-}"
+DB_PASSWORD="${DB_PASSWORD_PLACEHOLDER:-}"
+
+# Fallback to SSM Parameter Store if Terraform template passed empty placeholders
+if [ -z "$DB_HOST" ]; then
+  DB_HOST=$(aws ssm get-parameter --name "/supportdesk/dev/DB_HOST" --region us-east-1 --query "Parameter.Value" --output text 2>/dev/null || echo "")
+fi
+
+if [ -z "$DB_PASSWORD" ]; then
+  DB_PASSWORD=$(aws ssm get-parameter --name "/supportdesk/dev/DB_PASSWORD" --with-decryption --region us-east-1 --query "Parameter.Value" --output text 2>/dev/null || echo "")
+fi
+
 cat > /opt/supportdesk/.env <<EOF
-DB_HOST=${DB_HOST_PLACEHOLDER}
-DB_PASSWORD=${DB_PASSWORD_PLACEHOLDER}
+DB_HOST=${DB_HOST}
+DB_PASSWORD=${DB_PASSWORD}
 EOF
 
 ###############################################################################
 # Start Application with PM2
 ###############################################################################
 
-cd /opt/supportdesk
-
-export DB_HOST=${DB_HOST_PLACEHOLDER}
-export DB_PASSWORD=${DB_PASSWORD_PLACEHOLDER}
+export DB_HOST=${DB_HOST}
+export DB_PASSWORD=${DB_PASSWORD}
 
 pm2 start server.js --name supportdesk
 pm2 save
 
-# Enable PM2 on boot
 pm2 startup systemd -u root --hp /root || true
 systemctl enable pm2-root || true
 
 ###############################################################################
 # Configure Nginx Reverse Proxy
 ###############################################################################
+
+# Remove default server block conflicts on Amazon Linux 2023
+sed -i 's/default_server//g' /etc/nginx/nginx.conf || true
 
 cat > /etc/nginx/conf.d/supportdesk.conf <<'EOF'
 server {
@@ -184,6 +192,8 @@ systemctl restart nginx
 ###############################################################################
 # Configure CloudWatch Agent
 ###############################################################################
+
+mkdir -p /opt/aws/amazon-cloudwatch-agent/etc/
 
 cat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<'EOF'
 {
@@ -221,10 +231,6 @@ systemctl restart amazon-cloudwatch-agent || true
 ###############################################################################
 
 chmod -R 755 /opt/supportdesk
-
-###############################################################################
-# Finished
-###############################################################################
 
 echo "======================================================="
 echo "SupportDesk bootstrap completed successfully."
