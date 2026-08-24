@@ -1,0 +1,14 @@
+{
+  "commands": [
+    "echo '=== CURRENT USER ==='",
+    "whoami",
+    "echo '=== NODE PROCESSES ==='",
+    "ps aux | grep '[n]ode' || true",
+    "echo '=== PM2 PROCESSES ==='",
+    "pm2 list || true",
+    "echo '=== COMMON APP LOCATIONS ==='",
+    "ls -la /home/ec2-user || true",
+    "ls -la /home/ubuntu || true",
+    "ls -la /opt || true"
+  ]
+}

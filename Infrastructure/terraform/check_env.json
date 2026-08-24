@@ -1,0 +1,6 @@
+{
+  "commands": [
+    "sudo -u ec2-user printenv | grep '^DB_'",
+    "sudo -u ec2-user printenv | grep '^JWT_SECRET'"
+  ]
+}

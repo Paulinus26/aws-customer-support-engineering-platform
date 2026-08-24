@@ -1,0 +1,1 @@
+{"commands":["sudo -u ec2-user pm2 stop all", "sudo -u ec2-user PGSSLMODE=require pm2 restart all --update-env || PGSSLMODE=require pm2 restart all --update-env"]}
