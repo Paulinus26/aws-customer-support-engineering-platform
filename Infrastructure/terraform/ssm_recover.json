@@ -1,0 +1,1 @@
+{"commands":["APP_DIR=$(dirname $(find /home/ec2-user -name app.js -type f 2>/dev/null | head -n 1))", "cd $APP_DIR || exit 1", "git fetch --all && git reset --hard origin/main", "npm install", "sudo -u ec2-user pm2 delete all || pm2 delete all", "sudo -u ec2-user pm2 start app.js --name supportdesk || pm2 start app.js --name supportdesk"]}

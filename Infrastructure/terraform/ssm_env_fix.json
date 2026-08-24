@@ -1,0 +1,9 @@
+{
+  "commands": [
+    "cd /home/ec2-user/*portfolio* 2>/dev/null || cd /home/ec2-user/app 2>/dev/null || cd /app",
+    "git fetch --all && git reset --hard origin/main",
+    "npm install",
+    "sudo -u ec2-user pm2 delete all || pm2 delete all",
+    "sudo -u ec2-user DB_HOST='' DB_USER='' DB_NAME='' DB_PORT=5432 NODE_TLS_REJECT_UNAUTHORIZED=0 pm2 start src/app.js --name supportdesk --update-env"
+  ]
+}

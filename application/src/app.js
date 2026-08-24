@@ -1,6 +1,3 @@
-// Force Node TLS module to accept self-signed RDS certificates
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 require("dotenv").config();
 
 const express = require("express");
@@ -9,7 +6,6 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { Pool } = require("pg");
 
 const authenticateToken = require("./auth");
 
@@ -19,18 +15,6 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan("combined"));
-
-// PostgreSQL Connection Pool configured with SSL for AWS RDS
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: parseInt(process.env.DB_PORT, 10) || 5432,
-  ssl: {
-    rejectUnauthorized: false, // Required for AWS RDS SSL connection
-  },
-});
 
 const demoUser = {
   id: 1,
@@ -86,26 +70,17 @@ app.get("/dashboard", authenticateToken, (req, res) => {
   });
 });
 
-// Database Simulation Endpoint using the SSL Pool Connection
-app.get("/simulate/database", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW() as current_time;");
-    res.json({
-      status: "success",
-      message: "Database Connection Successful",
-      timestamp: result.rows[0].current_time,
-    });
-  } catch (err) {
-    console.error("Database Query Error:", err);
-    res.status(500).json({
-      error: "Database Connection Failed",
-      detail: err.message,
-    });
-  }
-});
-
 app.get("/simulate-error", (req, res) => {
   throw new Error("Simulated application incident");
+});
+
+app.get("/simulate-db-latency", async (req, res) => {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  res.json({
+    status: "slow-response",
+    delayMs: 5000,
+  });
 });
 
 app.use((err, req, res, next) => {
