@@ -1,0 +1,1 @@
+{"commands":["sudo -u ec2-user pm2 logs --lines 30 --raw || pm2 logs --lines 30 --raw"]}

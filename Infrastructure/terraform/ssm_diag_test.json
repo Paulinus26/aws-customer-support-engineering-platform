@@ -1,0 +1,17 @@
+{
+    "commands":  [
+                     "if [ ! -d /home/ec2-user/app/.git ]; then git clone https://github.com/Paulinus26/aws-customer-support-engineering-platform.git /home/ec2-user/app; fi",
+                     "cd /home/ec2-user/app",
+                     "git fetch --all \u0026\u0026 git reset --hard origin/main",
+                     "npm install",
+                     "pkill -f node || true",
+                     "export PORT=3000",
+                     "export NODE_TLS_REJECT_UNAUTHORIZED=0",
+                     "nohup node src/app.js \u003e app.log 2\u003e\u00261 \u0026",
+                     "sleep 4",
+                     "echo \u0027=== LOCAL CURL RESPONSE ===\u0027",
+                     "curl -i http://localhost:3000/health || echo \u0027LOCAL_CURL_FAILED\u0027",
+                     "echo \u0027=== APP LOG CONTENTS ===\u0027",
+                     "cat app.log"
+                 ]
+}

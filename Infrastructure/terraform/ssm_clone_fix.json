@@ -1,0 +1,14 @@
+{
+    "commands":  [
+                     "mkdir -p /home/ec2-user/app",
+                     "cd /home/ec2-user/app",
+                     "if [ ! -d .git ]; then git clone https://github.com/Paulinus26/aws-customer-support-engineering-platform.git .; else git fetch --all \u0026\u0026 git reset --hard origin/main; fi",
+                     "TARGET_DIR=$(find /home/ec2-user/app -name app.js -exec dirname {} \\; | head -n 1)",
+                     "cd \"$TARGET_DIR\"",
+                     "npm install",
+                     "export NODE_TLS_REJECT_UNAUTHORIZED=0",
+                     "pkill -f node || true",
+                     "sudo -u ec2-user PM2_HOME=/home/ec2-user/.pm2 pm2 delete all || true",
+                     "sudo -u ec2-user NODE_TLS_REJECT_UNAUTHORIZED=0 PM2_HOME=/home/ec2-user/.pm2 pm2 start app.js --name supportdesk || NODE_TLS_REJECT_UNAUTHORIZED=0 nohup node app.js \u003e app.log 2\u003e\u00261 \u0026"
+                 ]
+}

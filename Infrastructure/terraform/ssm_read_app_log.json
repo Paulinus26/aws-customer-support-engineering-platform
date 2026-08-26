@@ -1,0 +1,1 @@
+{"commands":["cd /home/ec2-user/*portfolio* 2>/dev/null || cd /home/ec2-user/app 2>/dev/null || cd /app", "cat app.log"]}
