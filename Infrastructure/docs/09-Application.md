@@ -77,7 +77,7 @@ The dashboard requires a valid JWT token.
 
 ![Login Authentication](../screenshots/application-login-authentication.png)
 
----
+## Figure 9: Login Authentication
 
 ## Health Check
 
@@ -90,6 +90,8 @@ GET /health
 A successful response confirms that the application is running.
 
 ![Application Health](../screenshots/application-health.png)
+
+Figure 10: SupportDesk Application Health Check
 
 ---
 
@@ -117,7 +119,7 @@ This intentionally generates an application error so that the incident can be re
 
 ![Simulated Application Incident](../screenshots/simulated-error.png)
 
----
+## Figure 11: Controlled Application Incident Simulation
 
 ## Error Handling
 
@@ -126,6 +128,8 @@ The application uses centralized Express error handling.
 When an application error occurs, it returns an HTTP 500 response and records the error in the application logs.
 
 ![Application Error Response](../screenshots/error-response.png)
+
+Figure 12: Application Error Response
 
 ---
 
@@ -153,8 +157,6 @@ The AWS deployment uses CloudWatch for centralized application logging.
 /aws/ec2/supportdesk-dev
 ```
 
-![CloudWatch Incident Investigation](../screenshots/cloudwatch-incident-investigation.png)
-
 ---
 
 ## Deployment
@@ -162,19 +164,27 @@ The AWS deployment uses CloudWatch for centralized application logging.
 The application runs on the AWS infrastructure provisioned with Terraform.
 
 ```text
-GitHub
+GitHub Actions
    |
    v
-Application
+Terraform
    |
    v
-EC2
+AWS Infrastructure
+   |
+   +------------------+
+   |                  |
+   v                  v
+Application       Monitoring
+   |                  |
+   v                  v
+EC2              CloudWatch
    |
    v
 Application Load Balancer
    |
    v
-paulinusops.online
+Healthy Target Group
 ```
 
 Infrastructure configuration is maintained separately under:
@@ -187,20 +197,17 @@ Infrastructure/terraform/
 
 ## Verification
 
-The application is considered functional when:
+The deployment was validated using the following checks:
 
-- The homepage loads successfully.
-- Login returns a valid token.
-- The dashboard requires authentication.
-- `/health` returns a successful response.
-- `/simulate-error` produces the expected incident.
-- Application errors are logged.
-- CloudWatch can be used to investigate application activity.
-- The application can receive traffic through the Application Load Balancer.
+- Terraform CI/CD workflow completed successfully.
+- The required AWS infrastructure was provisioned successfully.
+- The Application Load Balancer reached the Active state.
+- The target group reported one healthy target and zero unhealthy targets.
+- The EC2 application passed the configured ALB health check on port 8080.
+- CloudWatch resources were provisioned for centralized logging and monitoring.
+- Application authentication and incident simulation endpoints were included as part of the application support environment.
 
 ---
-
-## Application Screenshots
 
 ### Application Homepage
 
@@ -209,6 +216,8 @@ The application is considered functional when:
 ### Authenticated Dashboard
 
 ![Authenticated Dashboard](../screenshots/application-dashboard.png)
+
+Figure 13: Authenticaed Dashboard
 
 ### Application Health
 
@@ -224,10 +233,12 @@ The application is considered functional when:
 
 ### CloudWatch Investigation
 
-![CloudWatch Investigation](../screenshots/cloudwatch-incident-investigation.png)
-
 ---
 
 ## Outcome
 
-SupportDesk provides a practical environment for demonstrating technical support, API troubleshooting, authentication, database troubleshooting, AWS monitoring, incident investigation, and root-cause analysis.
+SupportDesk demonstrates the deployment and operation of a cloud-based customer support application environment using Node.js, Express, AWS, Terraform, GitHub Actions, PostgreSQL, and CloudWatch.
+
+The project successfully demonstrates infrastructure-as-code deployment, CI/CD automation, load balancing, EC2 application hosting, health monitoring, centralized logging, authentication, incident simulation, and troubleshooting workflows.
+
+Final infrastructure validation confirmed a successful Terraform deployment, an active Application Load Balancer, and a healthy application target. A database-related application endpoint remained under investigation after returning a 502 Bad Gateway response during final testing.

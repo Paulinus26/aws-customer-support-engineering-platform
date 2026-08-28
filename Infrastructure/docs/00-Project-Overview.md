@@ -133,20 +133,6 @@ aws-customer-support-engineering-platform/
 
 ---
 
-## Screenshot Placeholders
-
-Add these images after deployment:
-
-| Screenshot                               | Description                                 |
-| ---------------------------------------- | ------------------------------------------- |
-| `screenshots/vpc-overview.png`           | VPC dashboard showing subnets and gateways  |
-| `screenshots/alb-dashboard.png`          | Application Load Balancer dashboard         |
-| `screenshots/ec2-running.png`            | Running EC2 instances in Auto Scaling Group |
-| `screenshots/rds-dashboard.png`          | RDS PostgreSQL instance                     |
-| `screenshots/cloudwatch-dashboard.png`   | CloudWatch metrics dashboard                |
-| `screenshots/github-actions-success.png` | Successful GitHub Actions workflow          |
-| `screenshots/supportdesk-homepage.png`   | Running SupportDesk application             |
-
 ---
 
 The project is considered successful when:

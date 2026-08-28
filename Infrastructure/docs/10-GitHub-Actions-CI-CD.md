@@ -32,4 +32,4 @@ Automate Terraform validation and deployment.
 - ![GitHub Action Summary](../screenshots/github-actions-workflow-run-summary.png)
 - `![Successfull Terraform pipeline](../screenshots/github-actions-workflow-success.png)
 
-**Description:** Successful GitHub Actions Terraform workflow.
+Figure 14:Successful GitHub Actions Terraform workflow.

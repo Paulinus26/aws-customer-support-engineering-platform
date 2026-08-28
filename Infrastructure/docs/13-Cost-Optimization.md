@@ -18,15 +18,15 @@
 
 For practice environments:
 
-* Use a single NAT Gateway.
-* Use Single-AZ RDS.
-* Destroy resources after testing.
-* Keep only documentation and screenshots.
+- Use a single NAT Gateway.
+- Use Single-AZ RDS.
+- Destroy resources after testing.
+- Keep only documentation and screenshots.
 
 ---
 
 ## Screenshot Placeholder
 
-* `../screenshots/cost-explorer.png`
+- ![Cost Explorer](../screenshots/cost-explorer.png)
 
-**Description:** AWS Cost Explorer showing project spend.
+Figure 18: AWS Cost Explorer showing project spend.
