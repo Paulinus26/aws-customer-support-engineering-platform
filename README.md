@@ -12,87 +12,6 @@ logging, and incident investigation.
 
 ## Architecture
 
-![SupportDesk AWS Architecture](https://raw.githubusercontent.com/Paulinus26/aws-customer-support-engineering-platform/861fc609ff6a61ce310ffab7f8fdf3445d2fde50/supportdesk-architecture.png)
-
-## Technology Stack
-
-- AWS
-- Terraform
-- GitHub Actions
-- Node.js
-- Express.js
-- PostgreSQL
-- EC2
-- Application Load Balancer
-- Auto Scaling
-- CloudWatch
-- IAM
-- Amazon SNS
-- AWS Systems Manager
-
-## Infrastructure
-
-Terraform provisions the core AWS infrastructure, including:
-
-- VPC and subnet architecture
-- Application Load Balancer
-- EC2 Auto Scaling
-- PostgreSQL RDS
-- Security Groups
-- IAM
-- S3
-- CloudWatch
-- SNS
-- AWS Backup
-
-## Application
-
-The Node.js application provides:
-
-- Health checks
-- JWT authentication
-- Protected dashboard
-- PostgreSQL connectivity
-- Incident simulation
-- Centralized error handling
-
-## CI/CD
-
-GitHub Actions automates:
-
-1. Terraform formatting
-2. Terraform initialization
-3. Terraform validation
-4. Terraform planning
-5. Terraform application
-
-## Documentation
-
-Detailed project documentation is available in:
-
-`Infrastructure/docs`
-
-## Project Evidence
-
-The project includes architecture diagrams, infrastructure
-configuration, application code, CI/CD workflow evidence, and
-deployment and troubleshooting documentation.
-=======
-
-# SupportDesk AWS Customer Support Engineering Platform
-
-## Overview
-
-SupportDesk is a customer support engineering platform designed to
-resemble a production SaaS environment.
-
-The project demonstrates AWS infrastructure provisioning, Terraform
-Infrastructure as Code, Node.js application deployment, API
-troubleshooting, authentication, PostgreSQL connectivity, monitoring,
-logging, and incident investigation.
-
-## Architecture
-
 ![SupportDesk AWS Architecture](Infrastructure/screenshots/supportdesk-architecture.png)
 
 ## Technology Stack
@@ -165,5 +84,3 @@ Explore the project documentation:
 The project includes architecture diagrams, infrastructure
 configuration, application code, CI/CD workflow evidence, and
 deployment and troubleshooting documentation.
-
-> > > > > > > 3a8cd72 (docs: update README image links and documentation)
