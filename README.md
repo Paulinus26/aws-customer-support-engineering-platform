@@ -70,7 +70,7 @@ GitHub Actions automates:
 
 Detailed project documentation is available in:
 
-`Infrastructure/docs/`
+`Infrastructure/docs`
 
 ## Project Evidence
 
