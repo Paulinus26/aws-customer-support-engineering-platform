@@ -12,7 +12,7 @@ logging, and incident investigation.
 
 ## Architecture
 
-![SupportDesk AWS Architecture](Infrastructure/screenshots/supportdesk-architecture.png)
+![SupportDesk AWS Architecture](https://raw.githubusercontent.com/Paulinus26/aws-customer-support-engineering-platform/861fc609ff6a61ce310ffab7f8fdf3445d2fde50/supportdesk-architecture.png)
 
 ## Technology Stack
 
