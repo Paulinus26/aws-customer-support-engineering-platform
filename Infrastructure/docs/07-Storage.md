@@ -30,7 +30,7 @@ Provide secure object storage and backup capabilities.
 
 ---
 
-- ![S3-buckets](../screenshots/S3-buckets.png)
+- ![S3 Buckets](../screenshots/S3-buckets.png)
 - ![S3 Encryption](../screenshots/S3-encryption.png)
 
 **Figure 7:** S3 bucket configuration and encryption settings.
