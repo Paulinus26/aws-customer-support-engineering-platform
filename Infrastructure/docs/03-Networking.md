@@ -42,8 +42,8 @@ Public resources are isolated from private workloads. Application and database t
 
 ---
 
-- ![VPC Dashboard](../screenshots/vpc-dashboard.png)
-- ![Subnets](../screenshots/subnets.png)
-- ![Route Tables](../screenshots/route-tables.png)
+- ![VPC Dashboard](../screenshots/VPC-dashboard.png)
+- ![Subnets](../screenshots/Subnets.png)
+- ![Route Tables](../screenshots/Route-tables.png)
 
 **Figure 3:** AWS VPC dashboard showing the SupportDesk VPC, subnets, route tables, and gateways.

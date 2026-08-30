@@ -39,6 +39,6 @@ CloudWatch Alarm → SNS Topic → Email/Notification Endpoint
 ---
 
 - ![CloudWatch](../screenshots/cloudwatch-log-group.png)
-- ![SNS Topic](../screenshots/sns-topic.png)
+- ![SNS Topic](../screenshots/SNS-Topic.png)
 
 **Figure 8:** CloudWatch dashboards, and SNS topic.
