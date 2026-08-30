@@ -48,6 +48,7 @@ Implement identity and network security controls.
 ---
 
 - ![IAM Role](../screenshots/iam-role.png)
-- ![Security Groups](../screenshots/Security-Groups.png)
+- <img width="1067" height="262" alt="Security-Groups" src="https://github.com/user-attachments/assets/d7575c3e-3b72-410b-afdf-241ddb3bbb42" />
+
 
 **Figure 4:** IAM role attachments and security group rules.
