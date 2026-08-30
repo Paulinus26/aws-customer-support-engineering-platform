@@ -30,7 +30,8 @@ Provide secure object storage and backup capabilities.
 
 ---
 
-- ![S3 Buckets](../screenshots/S3-buckets.png)
+- <img width="971" height="101" alt="S3-buckets" src="https://github.com/user-attachments/assets/6a6e39dc-8f30-4cda-b783-6ffcc6b209fc" />
+
 - ![S3 Encryption](../screenshots/S3-encryption.png)
 
 **Figure 7:** S3 bucket configuration and encryption settings.
