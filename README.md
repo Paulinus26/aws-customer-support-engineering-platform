@@ -70,14 +70,7 @@ GitHub Actions automates:
 
 Explore the project documentation:
 
-- [Architecture](Infrastructure/docs/01-Architecture.md)
-- [Infrastructure Design](Infrastructure/docs/02-Infrastructure-Design.md)
-- [Application Design](Infrastructure/docs/03-Application-Design.md)
-- [Security](Infrastructure/docs/04-Security.md)
-- [Monitoring](Infrastructure/docs/05-Monitoring.md)
-- [Incident Response](Infrastructure/docs/06-Incident-Response.md)
-- [Deployment Guide](Infrastructure/docs/07-Deployment-Guide.md)
-- [Troubleshooting](Infrastructure/docs/08-Troubleshooting.md)
+[View the SupportDesk project documentation →](Infrastructure/docs/)
 
 ## Project Evidence
 
