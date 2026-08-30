@@ -37,6 +37,6 @@ If the primary database fails, AWS automatically promotes the standby instance.
 
 ---
 
-- ![RDS-Database](../screenshots/rds-overview.png)
+- ![RDS-Overview](../screenshots/rds-overview.png)
 
 **Figure 5:** RDS instance detail.

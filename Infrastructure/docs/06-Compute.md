@@ -51,7 +51,7 @@ Deploy the application tier behind an Application Load Balancer.
 ---
 
 - ![Load Balancer](../screenshots/Load-balancer.png)
-- ![Target Group](../screenshots/target-group.png)
+- ![Target-Group](../screenshots/target-group.png)
 - ![EC2 Instance](../screenshots/ec2-instances.png)
 
 **Figure 6:** ALB dashboard, target group health, and EC2 instances.

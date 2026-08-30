@@ -48,6 +48,6 @@ Implement identity and network security controls.
 ---
 
 - ![IAM Role](../screenshots/iam-role.png)
-- ![Security Group](../screenshots/security-groups.png)
+- ![Security-Group](../screenshots/security-groups.png)
 
 **Figure 4:** IAM role attachments and security group rules.
